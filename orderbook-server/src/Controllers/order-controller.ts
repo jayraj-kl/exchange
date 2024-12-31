@@ -1,11 +1,10 @@
+import { incrementTradeId } from "..";
 import { orderbook, bookWithQuantity, Fill } from "../type";
-let GLOBAL_TRADE_ID = 0;
 
 
 export function getOrderId(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
-
 
 export function fillOrder(orderId: string, price: number, quantity: number, side: "buy" | "sell", type?: "ioc"): { status: "rejected" | "accepted"; executedQty: number; fills: Fill[] } {
     const fills: Fill[] = [];
@@ -27,7 +26,7 @@ export function fillOrder(orderId: string, price: number, quantity: number, side
                 fills.push({
                     price: o.price,
                     qty: filledQuantity,
-                    tradeId: GLOBAL_TRADE_ID++
+                    tradeId: incrementTradeId()
                 });
                 executedQty += filledQuantity;
                 quantity -= filledQuantity;
@@ -59,7 +58,7 @@ export function fillOrder(orderId: string, price: number, quantity: number, side
                 fills.push({
                     price: o.price,
                     qty: filledQuantity,
-                    tradeId: GLOBAL_TRADE_ID++
+                    tradeId: incrementTradeId()
                 });
                 executedQty += filledQuantity;
                 quantity -= filledQuantity;

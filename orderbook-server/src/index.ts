@@ -2,6 +2,9 @@ import express from "express";
 import { OrderInputSchema } from "./zod";
 import { getOrderId, fillOrder } from "./Controllers/order-controller";
 
+let GLOBAL_TRADE_ID = 0;
+export const incrementTradeId = () => { return ++GLOBAL_TRADE_ID };
+
 const BASE_ASSET = 'BTC';
 const QUOTE_ASSET = 'USD';
 
