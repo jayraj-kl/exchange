@@ -6,12 +6,16 @@ export function getOrderId(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
 
-export function fillOrder(orderId: string, price: number, quantity: number, side: "buy" | "sell", type?: "ioc"): { status: "rejected" | "accepted"; executedQty: number; fills: Fill[] } {
+export function fillOrder(orderId: string, price: number, quantity: number, side: "buy" | "sell", kind?: "ioc"): { status: "rejected" | "accepted"; executedQty: number; fills: Fill[] } {
     const fills: Fill[] = [];
+
+    console.log("Parameters inside the 'getFillAmount()': ", price, quantity, side);
     const maxFillQuantity = getFillAmount(price, quantity, side);
+    console.log("maxFillQuantity: ", maxFillQuantity);
+
     let executedQty = 0;
 
-    if (type === 'ioc' && maxFillQuantity < quantity) {
+    if (kind === 'ioc' && maxFillQuantity < quantity) {
         return { status: 'rejected', executedQty: maxFillQuantity, fills: [] };
     }
     
